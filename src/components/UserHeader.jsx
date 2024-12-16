@@ -1,10 +1,7 @@
 import { Avatar } from "@chakra-ui/react";
-import { Box, Flex, Link, Text, VStack} from "@chakra-ui/react";
-import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
-import { Portal } from "@chakra-ui/react";
+import { Box, Flex, Link, Text, VStack, Button} from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
-import { BsInstagram } from "react-icons/bs";
-import { CgMoreO } from "react-icons/cg";
+import { FaCopy } from "react-icons/fa";
 
 
 const UserHeader = () => {
@@ -32,9 +29,6 @@ const UserHeader = () => {
                     </Text>
                     <Flex gap={2} alignItems={"center"}>
                         <Text fontSize={"sm"}>markzuckerberg</Text>
-                        <Text fontSize={"xs"} bg={"gray.dark"} color={"gray.light"} p={1} borderRadius={"full"}>
-                            skyLark.net
-                        </Text>
                     </Flex>
                 </Box>
                 <Box>
@@ -57,24 +51,15 @@ const UserHeader = () => {
                 </Flex>
                 <Flex>
                     <Box className="icon-container">
-                        <Menu>
-                            <MenuButton>
-                                <CgMoreO size={24} cursor={"pointer"} />
-                            </MenuButton>
-                            <Portal>
-                                <MenuList bg={"gray.light"}>
-                                    <MenuItem bg={"gray.light"} fontWeight={"bold"} onClick={copyURL}>
-                                        Copy Link
-                                    </MenuItem>
-                                </MenuList>
-                            </Portal>
-                        </Menu>
+                        <Button onClick={copyURL}>
+                            <FaCopy size={24} cursor={"pointer"}/>
+                        </Button>
                     </Box>
                 </Flex>
             </Flex>
             <Flex w={"full"}>
                 <Flex flex={1} borderBottom={"1.5px solid white"} justifyContent={"center"} pb="3" cursor={"pointer"}>
-                    <Text fontWeight={"bold"}> Threads</Text>
+                    <Text fontWeight={"bold"}> Posts</Text>
                 </Flex>
                 <Flex 
                     flex={1}
