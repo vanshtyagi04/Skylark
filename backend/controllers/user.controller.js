@@ -71,7 +71,7 @@ const loginUser = asyncHandler( async (req , res) => {
 
     generateTokenAndSetCookie(user._id , res);
 
-    req.status(200).json({
+    res.status(200).json({
         _id: user._id,
         name: user.name,
         email: user.email,
@@ -82,8 +82,8 @@ const loginUser = asyncHandler( async (req , res) => {
 })
 
 const logoutUser = asyncHandler( async(req,res) => {
-    req.cookie("jwt", "", {maxAge: 1});
-    req.status(200).json({ message: "User logged out successfully"});
+    res.cookie("jwt", "", {maxAge: 1});
+    res.status(200).json({ message: "User logged out successfully"});
 })
 
 const followUnFollowUser = asyncHandler(async (req, res) => {

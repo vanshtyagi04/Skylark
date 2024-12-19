@@ -16,15 +16,18 @@ import {
   Link,
 } from '@chakra-ui/react'
 import { useState } from 'react'
-import { useToast } from '@chakra-ui/react'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import { useSetRecoilState } from 'recoil'
 import authScreenAtom from '../../atoms/authAtom.js'
+import userAtom from '../../atoms/userAtom.js'
+import useShowToast from '../hooks/useShowToast.js';
 
 export default function SignupCard() {
+  const [loading , setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const setAuthScreen = useSetRecoilState(authScreenAtom);
-  const toast = useToast();
+  const showToast = useShowToast();
+  const setUser = useSetRecoilState(userAtom);
   const [inputs , setInputs] = useState({
     name: "",
     username: "",
@@ -32,6 +35,7 @@ export default function SignupCard() {
     password: "",
   });
   const handleSignUp = async () => {
+    setLoading(true);
     try{
         const res = await fetch("/api/users/signup",{
             method: "POST",
@@ -42,19 +46,16 @@ export default function SignupCard() {
         });
         const data = await res.json();
         if(data.error){
-            toast({
-                title: "Error",
-                description: data.error,
-                status: "error",
-                duration: 3000,
-                isClosable: true,
-            })
+            showToast("Error",data.error, "error");
             return
         }
-        console.log(data);
-        
+       localStorage.setItem("user-info", JSON.stringify(data));
+       setUser(data);
     } catch(err) {
-        console.log(err);
+        showToast("Error",err, "error");
+    }
+    finally {
+        setLoading(false);
     }
   }
 
@@ -127,6 +128,7 @@ export default function SignupCard() {
                   bg: 'blue.500',
                 }}
                 onClick={handleSignUp}
+                isLoading= {loading}
                 >
                 Sign up
               </Button>
