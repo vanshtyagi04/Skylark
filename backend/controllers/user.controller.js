@@ -1,10 +1,10 @@
-import { asyncHandler } from "../utils/asyncHandler";
-import User from "../models/userModel";
-import Post from "../models/postModel";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import User from "../models/userModel.js";
+import Post from "../models/postModel.js";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import { v2 as cloudinary } from "cloudinary";
-import generateTokenAndSetCookie from "../utils/generateTokenAndSetCookie";
+import generateTokenAndSetCookie from "../utils/generateTokenAndSetCookie.js";
 
 const getUserProfile = asyncHandler(async (req , res) => {
     const { query } = req.params;
@@ -47,7 +47,7 @@ const signupUser = asyncHandler( async (req , res) => {
 
         res.status(201).json({
             _id: newUser._id,
-            name: newUser._id,
+            name: newUser.name,
             email: newUser.email,
             username: newUser.username,
             bio: newUser.bio,
@@ -71,7 +71,7 @@ const loginUser = asyncHandler( async (req , res) => {
 
     generateTokenAndSetCookie(user._id , res);
 
-    req.status(200).json({
+    res.status(200).json({
         _id: user._id,
         name: user.name,
         email: user.email,
@@ -82,8 +82,8 @@ const loginUser = asyncHandler( async (req , res) => {
 })
 
 const logoutUser = asyncHandler( async(req,res) => {
-    req.cookie("jwt", "", {maxAge: 1});
-    req.status(200).json({ message: "User logged out successfully"});
+    res.cookie("jwt", "", {maxAge: 1});
+    res.status(200).json({ message: "User logged out successfully"});
 })
 
 const followUnFollowUser = asyncHandler(async (req, res) => {
