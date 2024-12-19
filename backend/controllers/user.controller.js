@@ -1,10 +1,10 @@
-import { asyncHandler } from "../utils/asyncHandler";
-import User from "../models/userModel";
-import Post from "../models/postModel";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import User from "../models/userModel.js";
+import Post from "../models/postModel.js";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import { v2 as cloudinary } from "cloudinary";
-import generateTokenAndSetCookie from "../utils/generateTokenAndSetCookie";
+import generateTokenAndSetCookie from "../utils/generateTokenAndSetCookie.js";
 
 const getUserProfile = asyncHandler(async (req , res) => {
     const { query } = req.params;

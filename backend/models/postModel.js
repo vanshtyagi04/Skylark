@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const postSchema = mongoose.Schema({
     postedBy:{
-        type: mongoose.Schema.Types.ObjectsId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
@@ -20,13 +20,13 @@ const postSchema = mongoose.Schema({
     replies:[
         {
             userId:{
-                type: mongoose.Schema.Types.ObjectsId,
+                type: mongoose.Schema.Types.ObjectId,
                 ref: 'User',
                 required: true
             },
             text:{
                 type: String,
-                required: trusted
+                required: true
             },
             userProfilePic:{
                 type: String,
