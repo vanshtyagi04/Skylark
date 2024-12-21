@@ -23,6 +23,6 @@ router.post("/logout", logoutUser);
 router.post("/follow/:id", verifyJWT, followUnFollowUser);
 router.put("/update/:id", verifyJWT, updateUser);
 router.put("/freeze", verifyJWT, freezeAccount);
-router.get("/search", verifyJWT , findUsersByName)
+router.post("/search", verifyJWT , findUsersByName)
  
 export default router;
