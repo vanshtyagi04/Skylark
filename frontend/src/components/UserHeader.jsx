@@ -7,6 +7,7 @@ import useShowToast from '../hooks/useShowToast.js';
 import { useRecoilValue } from "recoil";
 import { Link as RouterLink } from "react-router-dom"
 import { useState } from 'react'
+import { useEffect } from "react";
 
 const UserHeader = ({user}) => {
     const toast = useToast();
@@ -27,6 +28,12 @@ const UserHeader = ({user}) => {
             });
         });
     };
+
+    useEffect(() => {
+        if (user && currentUser) {
+            setFollowing(user.followers.includes(currentUser._id));
+        }
+    }, [user, currentUser]);
 
     const handleFollowUnfollow = async() => {
         if(!currentUser) {

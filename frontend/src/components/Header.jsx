@@ -74,7 +74,7 @@ const Header = () => {
                         <CiSearch size={24} />
                     </Button>
                     <Button cursor={"pointer"} ml={"10px"}>
-                            <Link to={'/chat'}>
+                            <Link as={RouterLink} to={'/chat'}>
                                 <BsFillChatQuoteFill size={20}/>
                             </Link>
                     </Button>
