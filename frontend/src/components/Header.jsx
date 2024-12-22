@@ -23,6 +23,8 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { AiFillHome } from "react-icons/ai";
 import { RxAvatar } from "react-icons/rx";
+import {BsFillChatQuoteFill} from "react-icons/bs"
+
 
 const Header = () => {
     const { colorMode, toggleColorMode } = useColorMode();
@@ -67,8 +69,14 @@ const Header = () => {
         <Flex justifyContent={"flex-start"} mt={6} mb={12}>
             {user && (
                 <Box>
+
                     <Button cursor={"pointer"} onClick={onOpen} position={"absolute"} left={"10px"}>
                         <CiSearch size={24} />
+                    </Button>
+                    <Button cursor={"pointer"} ml={"10px"}>
+                            <Link to={'/chat'}>
+                                <BsFillChatQuoteFill size={20}/>
+                            </Link>
                     </Button>
                     <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
                         <DrawerOverlay />
