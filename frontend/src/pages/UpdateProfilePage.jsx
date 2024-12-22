@@ -1,5 +1,3 @@
-'use client'
-
 import {
   Button,
   Flex,
@@ -28,6 +26,7 @@ export default function UpdateProfilePage() {
         password: '',
     })
     const fileRef = useRef(null)
+    const [updating, setUpdating] = useState(false)
 
     const { handleImageChange, imgUrl } = usePreviewImg()
 
@@ -35,6 +34,8 @@ export default function UpdateProfilePage() {
 
     const handleSubmit = async(e) => {
       e.preventDefault()
+      if(updating) return 
+      setUpdating(true)
 
       try{
         const res = await fetch(`/api/users/update/${user._id}`, {
@@ -45,6 +46,7 @@ export default function UpdateProfilePage() {
           body: JSON.stringify({...inputs, profilePic: imgUrl}),
         })
         const data = await res.json()
+        console.log("Response Data:", data);
         if(data.error) {
           showToast("Error", data.error, "error")
           return
@@ -54,6 +56,8 @@ export default function UpdateProfilePage() {
         localStorage.setItem("user-threads", JSON.stringify(data))
       } catch(error) {
         showToast('Error', error, 'error')
+      } finally {
+        setUpdating(false)
       }
     }
 
@@ -156,6 +160,7 @@ export default function UpdateProfilePage() {
               bg: 'green.500',
             }}
             type='submit'
+            isLoading={updating}
             >
             Submit
           </Button>
