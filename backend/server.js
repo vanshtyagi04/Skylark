@@ -4,6 +4,7 @@ import connectDB from "./db/connectDB.js";
 import cookieParser from "cookie-parser";
 import userRoutes from "./routes/userRoutes.js";
 import { v2 as cloudinary } from "cloudinary";
+import postRoutes from "./routes/postRoutes.js";
 
 
 dotenv.config();
@@ -18,12 +19,13 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 })
 
-app.use(express.json());
+app.use(express.json({limit:"50mb"}));
 app.use(express.urlencoded({ extended: true}));
 app.use(cookieParser());
 
 
 //Routes
 app.use("/api/users",userRoutes)
+app.use("/api/posts", postRoutes);
 
 app.listen(PORT,() => console.log(`Server started at http://localhost:${PORT}`));

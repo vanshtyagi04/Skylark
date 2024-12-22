@@ -3,6 +3,7 @@ import {
     useColorMode,
     Button,
     Box,
+    Link,
     Input,
     useDisclosure,
     Drawer,
@@ -18,8 +19,10 @@ import { useState } from "react";
 import useShowToast from "../hooks/useShowToast";
 import { useRecoilValue } from "recoil";
 import userAtom from "../../atoms/userAtom";
-import { useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
+import { AiFillHome } from "react-icons/ai";
+import { RxAvatar } from "react-icons/rx";
 
 const Header = () => {
     const { colorMode, toggleColorMode } = useColorMode();
@@ -64,7 +67,7 @@ const Header = () => {
         <Flex justifyContent={"flex-start"} mt={6} mb={12}>
             {user && (
                 <Box>
-                    <Button cursor={"pointer"} onClick={onOpen}>
+                    <Button cursor={"pointer"} onClick={onOpen} position={"absolute"} left={"10px"}>
                         <CiSearch size={24} />
                     </Button>
                     <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
@@ -106,9 +109,23 @@ const Header = () => {
                     </Drawer>
                 </Box>
             )}
-            <Button ml = "20px" aria-label="Toggle color mode" onClick={toggleColorMode} cursor={"pointer"}>
+            <Flex justifyContent={"flex-center"} position={"absolute"} left={"25%"} >
+                {user && (
+                    <Link as={RouterLink} to="/">
+                        <AiFillHome size={35}/>
+                    </Link>
+                )}
+            </Flex>
+            <Button ml = "20px" aria-label="Toggle color mode" onClick={toggleColorMode} cursor={"pointer"} position={"absolute"} right={"100px"}>
                 {colorMode === "dark" ? <MdDarkMode size={24} /> : <MdOutlineLightMode size={24} />}
             </Button>
+            <Flex justifyContent={"flex-center"} position={"absolute"} right={"25%"} >
+                {user && (
+                    <Link as={RouterLink} to={`/${user.username}`}>
+                        <RxAvatar size={35}/>
+                    </Link>
+                )}
+            </Flex>
         </Flex>
     );
 };
