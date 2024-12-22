@@ -104,7 +104,7 @@ import userAtom from '../../atoms/userAtom.js';
               </FormControl>
               <Stack spacing={10} pt={2}>
                 <Button
-                  loadingText="Submitting"
+                  loadingText="Logging in"
                   size="lg"
                   bg={'blue.400'}
                   color={'white'}

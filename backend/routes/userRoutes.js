@@ -10,7 +10,7 @@ import {
 	getSuggestedUsers,
 	freezeAccount,
     findUsersByName,
-} from "../controllers/user.controller.js"
+} from "../controllers/userController.js"
 import verifyJWT from "../middleware/auth.middleware.js";
 
 const router = express.Router();
