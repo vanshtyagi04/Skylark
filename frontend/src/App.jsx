@@ -8,20 +8,25 @@ import AuthPage from "./pages/AuthPage.jsx";
 import { useRecoilValue } from "recoil";
 import userAtom from "../atoms/userAtom.js";
 import LogoutButton from "./components/LogoutButton.jsx";
+import ChatPage from "./pages/ChatPage.jsx";
+import { Box } from "@chakra-ui/react";
 
 function App() {
   const user = useRecoilValue(userAtom);
   return (
-    <Container maxW="620px">
+    <Box position={"relative"} w={"full"}>
+      <Container maxW="620px">
         <Header/>
         <Routes>
-          <Route path='/' element={user ? <HomePage/> : <Navigate to="/auth/signup"/>}/>
-          <Route path='/auth/signup' element={!user ? <AuthPage /> : <Navigate to="/"/>}/>
+          <Route path='/' element={user ? <HomePage/> : <Navigate to="/auth"/>}/>
+          <Route path='/auth' element={!user ? <AuthPage /> : <Navigate to="/"/>}/>
           <Route path='/:username' element={<UserPage />} />
 				  <Route path='/:username/post/:pid' element={<PostPage />} />
+          <Route path='/chat' element={user ? <ChatPage /> : <Navigate to={"/auth"} />} />
         </Routes>
         {user && <LogoutButton />}
-    </Container>
+      </Container>
+    </Box>
   )
 }
 

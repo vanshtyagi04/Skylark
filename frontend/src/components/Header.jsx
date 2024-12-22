@@ -18,8 +18,9 @@ import { useState } from "react";
 import useShowToast from "../hooks/useShowToast";
 import { useRecoilValue } from "recoil";
 import userAtom from "../../atoms/userAtom";
-import { useNavigate } from "react-router-dom";
+import { Link , useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
+import {BsFillChatQuoteFill} from "react-icons/bs"
 
 const Header = () => {
     const { colorMode, toggleColorMode } = useColorMode();
@@ -64,9 +65,16 @@ const Header = () => {
         <Flex justifyContent={"flex-start"} mt={6} mb={12}>
             {user && (
                 <Box>
-                    <Button cursor={"pointer"} onClick={onOpen}>
-                        <CiSearch size={24} />
-                    </Button>
+                    <Flex>
+                        <Button cursor={"pointer"} onClick={onOpen}>
+                            <CiSearch size={24} />
+                        </Button>
+                        <Button cursor={"pointer"} ml={"10px"}>
+                            <Link to={'/chat'}>
+                                <BsFillChatQuoteFill size={20}/>
+                            </Link>
+                        </Button>
+                    </Flex>
                     <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
                         <DrawerOverlay />
                         <DrawerContent>
