@@ -6,12 +6,14 @@ import Actions from './Actions'
 import { useState } from 'react'
 import useShowToast from '../hooks/useShowToast'
 import { formatDistanceToNow } from "date-fns"
+import { DeleteIcon } from "@chakra-ui/icons";
+import userAtom from '../../atoms/userAtom'
+
 
 const Post = ({post, postedBy}) => {
-    const [liked, setLiked] = useState(false)
     const [user, setUser] = useState(null)
     const showToast = useShowToast()
-
+    const currentUser = useRecoilValue(userAtom);
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -19,7 +21,6 @@ const Post = ({post, postedBy}) => {
             try {
                 const res = await fetch("/api/users/profile/" + postedBy)
                 const data = await res.json()
-                console.log(data)
                 if(data.error) {
                     showToast("Error", data.error, "error")
                     return 
@@ -89,7 +90,7 @@ const Post = ({post, postedBy}) => {
                             navigate(`/${user.username}`)
                         }}
                         >
-                            {user.username}
+                            {user?.username}
                         </Text>
                         <Image src='/verified.png' w={4} h={4} ml={1}/>
                     </Flex>
@@ -97,6 +98,10 @@ const Post = ({post, postedBy}) => {
                         <Text fontSize={"sm"} width={36} textAlign={"right"} color={"gray.500"}>
                             {formatDistanceToNow(new Date(post.createdAt))} ago
                         </Text>
+
+                        {currentUser?._id === user._id && (
+                            <DeleteIcon size={20} onClick={handleDeletePost} />
+                        )}
                     </Flex>
                 </Flex>
 
@@ -108,13 +113,7 @@ const Post = ({post, postedBy}) => {
                 }
 
                 <Flex gap={3} my={1}>
-                    <Actions liked={liked} setLiked={setLiked}/>
-                </Flex>
-
-                <Flex gap={2} alignItems={"center"}>
-                    <Text color={"gray.500"} fontSize={"sm"}>{post.replies.length} replies</Text>
-                    <Box w={0.5} h={0.5} borderRadius={"full"} bg={"gray.500"}></Box>
-                    <Text color={"gray.500"} fontSize={"sm"}>{post.likes.length} likes</Text>
+                    <Actions post={post}/>
                 </Flex>
             </Flex>
         </Flex>
