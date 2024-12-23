@@ -7,7 +7,6 @@ import {
 	followUnFollowUser,
 	updateUser,
 	getUserProfile,
-	getSuggestedUsers,
 	freezeAccount,
     findUsersByName,
 } from "../controllers/userController.js"
@@ -16,7 +15,6 @@ import verifyJWT from "../middleware/auth.middleware.js";
 const router = express.Router();
 
 router.get("/profile/:query", getUserProfile);
-router.get("/suggested", verifyJWT, getSuggestedUsers);
 router.post("/signup", signupUser);
 router.post("/login", loginUser);
 router.post("/logout", logoutUser);
