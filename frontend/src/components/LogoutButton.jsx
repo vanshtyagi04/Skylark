@@ -5,9 +5,12 @@ import useShowToast from "../hooks/useShowToast";
 import authScreenAtom from "../../atoms/authAtom";
 import { FiLogOut } from "react-icons/fi"
 import { useNavigate } from "react-router-dom";
+import { conversationsAtom, selectedConversationAtom } from "../../atoms/messagesAtom";
 
 const LogoutButton = () => {
     const setUser = useSetRecoilState(userAtom);
+    const setSelectedConversation = useSetRecoilState(selectedConversationAtom);
+    const setConversations = useSetRecoilState(conversationsAtom);
     const setLogin = useSetRecoilState(authScreenAtom);
     const showToast = useShowToast();
     const navigate = useNavigate();
@@ -28,6 +31,13 @@ const LogoutButton = () => {
             }
             localStorage.removeItem("user-info");
             setUser(null);
+            setConversations([]);
+            setSelectedConversation({
+                _id: "",
+                userId: "",
+                username: "",
+                userProfilePic: "",
+            })
             setLogin("login");
             showToast("Success", "Logged out successfully", "success")
             navigate("/auth")

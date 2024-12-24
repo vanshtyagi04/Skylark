@@ -12,7 +12,7 @@ const getUserProfile = asyncHandler(async (req , res) => {
         if(mongoose.Types.ObjectId.isValid(query)){
             user = await User.findOne({_id: query}).select("-password").select("-updateAt");
         } else {
-            user = await User.findOne({ username: query}).select("-password").select("-updateAt");
+            user = await User.findOne({ username: { $regex: query, $options: 'i' }}).select("-password").select("-updateAt");
         }
         if(!user){
             return res
@@ -183,7 +183,6 @@ const findUsersByName = asyncHandler(async (req, res) => {
     try {
         const users = await User.find({
              username: { $regex: name, $options: 'i' },
-             isFreeze: false,
         }).select("-password");
         if (users.length !== 0) {
             res.status(200)

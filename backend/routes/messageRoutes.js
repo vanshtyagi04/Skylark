@@ -5,7 +5,7 @@ import { sendMessage, getMessages, getConversations } from "../controllers/messa
 
 const router = express.Router();
 
-router.post("/conversations", verifyJWT, getConversations);
+router.get("/conversations", verifyJWT, getConversations);
 router.get("/:otherUserId" , verifyJWT, getMessages);
 router.post("/", verifyJWT, sendMessage);
 
