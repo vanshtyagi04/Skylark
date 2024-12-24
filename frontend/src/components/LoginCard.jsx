@@ -118,7 +118,7 @@ import userAtom from '../../atoms/userAtom.js';
               </Stack>
               <Stack pt={6}>
                 <Text align={'center'}>
-                  Don&apos;t have an account? <Link color={'blue.400'}
+                  Don't have an account? <Link color={'blue.400'}
                   onClick = {() => {setAuthScreen("signup")}}>Signup</Link>
                 </Text>
               </Stack>
