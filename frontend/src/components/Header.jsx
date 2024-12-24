@@ -14,16 +14,20 @@ import {
     Avatar,
     Text,
 } from "@chakra-ui/react";
+import { FiLogOut } from "react-icons/fi";
 import { MdOutlineLightMode, MdDarkMode } from "react-icons/md";
 import { useState } from "react";
 import useShowToast from "../hooks/useShowToast";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import userAtom from "../../atoms/userAtom";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { AiFillHome } from "react-icons/ai";
 import { RxAvatar } from "react-icons/rx";
 import {BsFillChatQuoteFill} from "react-icons/bs"
+import useLogout from "../hooks/useLogout.js";
+import authScreenAtom from "../../atoms/authAtom.js";
+
 
 
 const Header = () => {
@@ -37,6 +41,8 @@ const Header = () => {
     const showToast = useShowToast();
     const user = useRecoilValue(userAtom);
     const navigate = useNavigate();
+    const logout = useLogout()
+    const setAuthScreen = useSetRecoilState(authScreenAtom)
 
     const handleSearch = async () => {
         if (!search.name.trim()) {
@@ -123,17 +129,36 @@ const Header = () => {
                         <AiFillHome size={35}/>
                     </Link>
                 )}
+                {!user && (
+                    <Link as={RouterLink} to={"/auth"} onClick={
+                        () => setAuthScreen('login')
+                    }>
+                        Login
+                    </Link>
+                )}
             </Flex>
             <Button ml = "20px" aria-label="Toggle color mode" onClick={toggleColorMode} cursor={"pointer"} position={"absolute"} right={"100px"}>
                 {colorMode === "dark" ? <MdDarkMode size={24} /> : <MdOutlineLightMode size={24} />}
             </Button>
             <Flex justifyContent={"flex-center"} position={"absolute"} right={"25%"} >
                 {user && (
+                    <Flex alignItems={"center"} gap={4}>
                     <Link as={RouterLink} to={`/${user.username}`}>
                         <RxAvatar size={35}/>
                     </Link>
+                    <Button size={"xs"} onClick={logout}>
+                        <FiLogOut size={20}/>
+                    </Button>
+                    </Flex>
                 )}
             </Flex>
+            {!user && (
+                <Link as={RouterLink} to={"/auth"} onClick={
+                    () => setAuthScreen('signup')
+                }>
+                    Signup
+                </Link>
+            )}
         </Flex>
     );
 };
