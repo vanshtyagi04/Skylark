@@ -1,9 +1,9 @@
 import { useColorModeValue, Flex, WrapItem, Avatar, AvatarBadge, useColorMode } from "@chakra-ui/react"
-import { Stack, Text, Image } from "@chakra-ui/react"
+import { Stack, Text} from "@chakra-ui/react"
 import { useRecoilState, useRecoilValue } from "recoil";
-import userAtom from "../../atoms/userAtom";
+import userAtom from "../atoms/userAtom.js";
 import { BsCheck2All } from "react-icons/bs";
-import { selectedConversationAtom } from "../../atoms/messagesAtom";
+import { selectedConversationAtom } from "../atoms/messagesAtom.js";
 
 const Conversation = ({conversation}) => {
     const user = conversation.participants[0];
@@ -44,7 +44,7 @@ const Conversation = ({conversation}) => {
 
             <Stack direction={"column"} fontSize={"sm"}>
                 <Text fontWeight='700' display={"flex"} alignItems={"center"}>
-                    {user.username} <Image src="/verified.png" w={4} h={4} ml={1} />
+                    {user.username} 
                 </Text>
                 <Text fontSize={"xs"} display={"flex"} alignItems={"center"} gap={1}>
                     {currentUser._id === lastMessage.sender ? <BsCheck2All size={16} /> : ""}

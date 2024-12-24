@@ -1,8 +1,8 @@
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { useState } from "react";
 import { IoSendSharp } from "react-icons/io5";
-import useShowToast from "../hooks/useShowToast";
-import { conversationsAtom, selectedConversationAtom } from "../../atoms/messagesAtom";
+import useShowToast from "../hooks/useShowToast.js";
+import { conversationsAtom, selectedConversationAtom } from "../atoms/messagesAtom.js";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 

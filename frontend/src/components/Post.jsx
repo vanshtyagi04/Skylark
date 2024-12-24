@@ -2,14 +2,14 @@ import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Box, Flex, Text, Image } from '@chakra-ui/react'
 import { Avatar } from '@chakra-ui/react'
-import Actions from './Actions'
+import Actions from './Actions.jsx'
 import { useState } from 'react'
-import useShowToast from '../hooks/useShowToast'
+import useShowToast from '../hooks/useShowToast.js'
 import { formatDistanceToNow } from "date-fns"
 import { DeleteIcon } from "@chakra-ui/icons";
-import userAtom from '../../atoms/userAtom'
+import userAtom from '../atoms/userAtom.js'
 import { useRecoilState, useRecoilValue } from "recoil";
-import postsAtom from '../../atoms/postsAtom'
+import postsAtom from '../atoms/postsAtom.js'
 
 const Post = ({post, postedBy}) => {
     const [user, setUser] = useState(null)
@@ -71,7 +71,7 @@ const Post = ({post, postedBy}) => {
                     {post.replies[0] && (
                         <Avatar 
                         size="xs"
-                        name="John Doe"
+                        name="User"
                         src={post.replies[0].userProfilePic}
                         position={"absolute"}
                         top={"0px"}
@@ -82,7 +82,7 @@ const Post = ({post, postedBy}) => {
                     {post.replies[1] && (
                         <Avatar 
                         size="xs"
-                        name="John Doe"
+                        name="User"
                         src={post.replies[1].userProfilePic}
                         position={"absolute"}
                         top={"0px"}
@@ -93,7 +93,7 @@ const Post = ({post, postedBy}) => {
                     {post.replies[2] && (
                         <Avatar 
                         size="xs"
-                        name="John Doe"
+                        name="User"
                         src={post.replies[2].userProfilePic}
                         position={"absolute"}
                         top={"0px"}

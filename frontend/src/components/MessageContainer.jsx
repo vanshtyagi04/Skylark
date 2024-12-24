@@ -5,9 +5,9 @@ import MessageInput from "./MessageInput.jsx";
 import { useEffect } from "react";
 import useShowToast from "../hooks/useShowToast.js";
 import { useRecoilValue } from "recoil";
-import { selectedConversationAtom } from "../../atoms/messagesAtom.js";
+import { selectedConversationAtom } from "../atoms/messagesAtom.js";
 import { useState } from "react";
-import userAtom from "../../atoms/userAtom.js";
+import userAtom from "../atoms/userAtom.js";
 
 const MessageContainer = () => {
     const showToast = useShowToast();
@@ -48,7 +48,7 @@ const MessageContainer = () => {
             <Flex w={"full"} h={12} alignItems={"center"} gap={2}>
                 <Avatar src={selectedConversation.userProfilePic} size={"sm"} />
                 <Text display={"flex"} alignItems={"center"}>
-                    {selectedConversation.username} <Image src="/verified.png" w={4} h={4} ml={1} />
+                    {selectedConversation.username} 
                 </Text>
             </Flex>
             <Divider/>

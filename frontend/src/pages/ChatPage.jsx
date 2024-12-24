@@ -8,8 +8,8 @@ import MessageContainer from "../components/MessageContainer.jsx";
 import useShowToast from "../hooks/useShowToast.js";
 import { useState, useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { conversationsAtom, selectedConversationAtom } from "../../atoms/messagesAtom.js";
-import userAtom from "../../atoms/userAtom.js";
+import { conversationsAtom, selectedConversationAtom } from "../atoms/messagesAtom.js";
+import userAtom from "../atoms/userAtom.js";
 
 const ChatPage = () => {
     const showToast = useShowToast();

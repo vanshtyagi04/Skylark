@@ -2,7 +2,7 @@ import { Avatar } from "@chakra-ui/react";
 import { Box, Flex, Link, Text, VStack, Button} from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { FaCopy } from "react-icons/fa";
-import userAtom from '../../atoms/userAtom.js'
+import userAtom from '../atoms/userAtom.js'
 import useShowToast from '../hooks/useShowToast.js';
 import { useRecoilValue } from "recoil";
 import { Link as RouterLink } from "react-router-dom"

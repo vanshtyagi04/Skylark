@@ -1,10 +1,17 @@
-import userAtom from "../../atoms/userAtom";
+import userAtom from "../atoms/userAtom";
 import { useSetRecoilState } from "recoil";
 import useShowToast from "./useShowToast";
+import { useNavigate } from "react-router-dom";
+import { conversationsAtom, selectedConversationAtom } from "../atoms/messagesAtom";
+import authScreenAtom from "../atoms/authAtom";
 
 const useLogout = () => {
 	const setUser = useSetRecoilState(userAtom);
+	const setSelectedConversation = useSetRecoilState(selectedConversationAtom);
+	const setConversations = useSetRecoilState(conversationsAtom);
+	const setLogin = useSetRecoilState(authScreenAtom);
 	const showToast = useShowToast();
+	const navigate = useNavigate();
 
 	const logout = async () => {
 		try {
@@ -21,8 +28,18 @@ const useLogout = () => {
 				return;
 			}
 
-			localStorage.removeItem("user-threads");
+			localStorage.removeItem("user-info");
 			setUser(null);
+			setConversations([]);
+            setSelectedConversation({
+                _id: "",
+                userId: "",
+                username: "",
+                userProfilePic: "",
+            })
+            setLogin("login");
+			navigate("/auth");
+
 		} catch (error) {
 			showToast("Error", error, "error");
 		}

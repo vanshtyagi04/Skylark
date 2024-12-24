@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import useShowToast from "../hooks/useShowToast.js";
 import Post from "../components/Post.jsx";
 import { useRecoilState } from "recoil";
-import postsAtom from "../../atoms/postsAtom.js";
+import postsAtom from "../atoms/postsAtom.js";
 
 const HomePage = () => {
     const [posts, setPosts] = useRecoilState(postsAtom)
@@ -16,7 +16,10 @@ const HomePage = () => {
             try {
                 const res = await fetch("/api/posts/feed")
                 const data = await res.json()
-                console.log(data)
+                if(data.error) {
+                    showToast("Error", data.error, "error");
+                    return;
+                }
                 setPosts(data)
             } catch(error) {
                 showToast("Error", error.message, "error")
@@ -27,19 +30,23 @@ const HomePage = () => {
         getFeedPosts()
     }, [showToast, setPosts])
     return (
-        <>
-            {!loading && posts.length === 0 && <h1>Follow some users to see the feed</h1>}
+            <Flex justifyContent={"center"} alignItems={"center"}>
+                <Box >
+                    {!loading && posts.length === 0 && <h1>Follow some users to see the feed</h1>}
 
-            {loading && (
-                <Flex justify="center">
-                    <Spinner size="xl" />
-                </Flex>
-            )}
+                    {loading && (
+                        <Flex justify="center">
+                            <Spinner size="xl" />
+                        </Flex>
+                    )}
 
-            {posts.map((post) => (
-					<Post key={post._id} post={post} postedBy={post.postedBy} />
-			))}
-        </>
+                    {posts.map((post) => (
+                            <Post key={post._id} post={post} postedBy={post.postedBy} />
+                    ))}
+                </Box>
+            </Flex>
+            
+        
     )
 };
 
