@@ -166,28 +166,6 @@ const updateUser = asyncHandler(async (req, res) => {
     }
 })
 
-const getSuggestedUsers = asyncHandler(async (req , res) => {
-    const userId = req.user._id;
-    const usersFollowedByYou = await User.findById(userId).select("following");
-    const users = await User.aggregate([
-        {
-            $match: {
-                _id: { $ne: userId},
-            }
-        },
-        {
-            $sample: { size: 10},
-        },
-    ]);
-
-    const filteredUsers = users.filter((user) => !usersFollowedByYou.following.includes(user._id));
-    const suggestedUsers = filteredUsers.slice(0,4);
-
-    suggestedUsers.forEach((user) => (user.password = null));
-
-    res.status(200).json(suggestedUsers);
-})
-
 const freezeAccount = asyncHandler(async (req , res) => {
     const user = await User.findById(req.user._id);
 		if (!user) {
@@ -203,7 +181,10 @@ const findUsersByName = asyncHandler(async (req, res) => {
     const { name } = req.body;
 
     try {
-        const users = await User.find({ username: { $regex: name, $options: 'i' } }).select("-password");
+        const users = await User.find({
+             username: { $regex: name, $options: 'i' },
+             isFreeze: false,
+        }).select("-password");
         if (users.length !== 0) {
             res.status(200)
                .json(users);
@@ -223,7 +204,6 @@ export {
 	followUnFollowUser,
 	updateUser,
 	getUserProfile,
-	getSuggestedUsers,
 	freezeAccount,
     findUsersByName,
 };

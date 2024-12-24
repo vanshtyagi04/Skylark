@@ -4,11 +4,13 @@ import userAtom from "../../atoms/userAtom";
 import useShowToast from "../hooks/useShowToast";
 import authScreenAtom from "../../atoms/authAtom";
 import { FiLogOut } from "react-icons/fi"
+import { useNavigate } from "react-router-dom";
 
 const LogoutButton = () => {
     const setUser = useSetRecoilState(userAtom);
     const setLogin = useSetRecoilState(authScreenAtom);
     const showToast = useShowToast();
+    const navigate = useNavigate();
     const handleLogout = async () => {
         try{
             const res = await fetch("/api/users/logout", {
@@ -27,6 +29,8 @@ const LogoutButton = () => {
             localStorage.removeItem("user-info");
             setUser(null);
             setLogin("login");
+            showToast("Success", "Logged out successfully", "success")
+            navigate("/auth")
         }
         catch(error) {
             showToast("Error",error, "error");
