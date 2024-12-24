@@ -78,7 +78,13 @@ const Header = () => {
                                 <BsFillChatQuoteFill size={20}/>
                             </Link>
                     </Button>
-                    <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
+                    <Drawer placement="left" onClose={() => {
+                        onClose();
+                        setSearch({
+                            name: ""
+                        });
+                        setSearchResult([]);
+                    }} isOpen={isOpen}>
                         <DrawerOverlay />
                         <DrawerContent>
                             <DrawerHeader borderBottomWidth="1px">Search Users</DrawerHeader>
