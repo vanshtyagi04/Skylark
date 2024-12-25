@@ -73,7 +73,6 @@ const PostPage = () => {
                     <Text fontSize={"sm"} fontWeight={"bold"}>
                         {user.username}
                     </Text>
-                    <Image src="/verified.png" w="4" h={4} ml={4} />
                 </Flex>
             </Flex>
             <Flex gap={4} alignItems={"center"}>
@@ -102,11 +101,11 @@ const PostPage = () => {
         
         <Divider my={4}/>
 
-        {currentPost.replies.map(reply =>(
+        {currentPost.replies.map((reply) =>(
           <Comment 
             key={reply._id}
             reply={reply}
-            lastReply= {reply._id === currentPost.replies(currentPost.replies.length._id)}
+            lastReply= {reply._id === currentPost.replies[currentPost.replies.length - 1]._id}
           />
         ))}
          

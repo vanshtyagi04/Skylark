@@ -7,6 +7,8 @@ import Post from "../components/Post.jsx";
 import useGetUserProfile from "../hooks/useGetUserProfile.js";
 import { useRecoilState } from "recoil";
 import postsAtom from "../atoms/postsAtom.js";
+import { CiCamera } from "react-icons/ci";
+
 const UserPage = () => {
     const {user,loading} = useGetUserProfile();
     const { username } = useParams()
@@ -50,7 +52,10 @@ const UserPage = () => {
     return (
         <>
             <UserHeader user={user}/>
-            {!fetchingPosts && posts.length === 0 && <h1>User has not posts.</h1>}
+            {!fetchingPosts && posts.length === 0 && <Flex flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
+                        <CiCamera size={200}/>
+                        <h1>No post yet...</h1>
+                        </Flex>}
             {fetchingPosts && (
                 <Flex justifyContent={"center"} my={12}>
                     <Spinner size={"x1"} />

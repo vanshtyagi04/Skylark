@@ -4,6 +4,7 @@ import useShowToast from "../hooks/useShowToast.js";
 import Post from "../components/Post.jsx";
 import { useRecoilState } from "recoil";
 import postsAtom from "../atoms/postsAtom.js";
+import { CiCamera } from "react-icons/ci";
 
 const HomePage = () => {
     const [posts, setPosts] = useRecoilState(postsAtom)
@@ -32,7 +33,10 @@ const HomePage = () => {
     return (
             <Flex justifyContent={"center"} alignItems={"center"}>
                 <Box >
-                    {!loading && posts.length === 0 && <h1>Follow some users to see the feed</h1>}
+                    {!loading && posts.length === 0 && <Flex flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
+                        <CiCamera size={200}/>
+                        <h1>Follow users to see their posts ...</h1>
+                        </Flex>}
 
                     {loading && (
                         <Flex justify="center">

@@ -37,7 +37,8 @@ const Conversation = ({conversation}) => {
                     base:"xs",
                     sm:"sm",
                     md:"md"
-                }} src={user.profilePic}>
+                }} src={user.profilePic}
+                name = {user.username}>
                 <AvatarBadge boxSize="1em" bg="green.500"/>
                 </Avatar>
             </WrapItem>
