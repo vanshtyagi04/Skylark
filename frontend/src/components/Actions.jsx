@@ -9,7 +9,7 @@ import postsAtom from '../atoms/postsAtom.js';
 const Actions = ({post}) => {
 	const user = useRecoilValue(userAtom);
 	console.log(post)
-	const [liked, setLiked] = useState(post.likes.includes(user?._id));
+	const [liked, setLiked] = useState(Array.isArray(post.likes) && post.likes.includes(user?._id));;
 	const [posts, setPosts] = useRecoilState(postsAtom)
 	const showToast = useShowToast();
 	const [isLiking, setIsLiking] = useState(false);
