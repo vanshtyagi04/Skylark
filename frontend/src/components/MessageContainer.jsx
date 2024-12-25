@@ -4,10 +4,11 @@ import Message from "./Message.jsx";
 import MessageInput from "./MessageInput.jsx";
 import { useEffect } from "react";
 import useShowToast from "../hooks/useShowToast.js";
-import { useRecoilValue } from "recoil";
-import { selectedConversationAtom } from "../atoms/messagesAtom.js";
-import { useState } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { conversationsAtom, selectedConversationAtom } from "../atoms/messagesAtom.js";
+import { useState, useRef } from "react";
 import userAtom from "../atoms/userAtom.js";
+import { useSocket } from "../context/SocketContext.jsx";
 
 const MessageContainer = () => {
     const showToast = useShowToast();
@@ -15,6 +16,35 @@ const MessageContainer = () => {
     const [loadingMessages ,setLoadingMessages] = useState(true);
     const [messages , setMessages] = useState([]);
     const currentUser = useRecoilValue(userAtom);
+    const {socket} = useSocket()
+    const setConversations = useSetRecoilState(conversationsAtom)
+    const messageEndRef = useRef(null)
+
+    useEffect(() => {
+        socket.on("newMessage", (message) => {
+            if(selectedConversation._id === message.conversationId) {
+                setMessages((prevMessages) => [...prevMessages, message])
+            }
+
+            setConversations((prev) => {
+                const updatedConversations = prev.map(conversation => {
+                    if(conversation._id === message.conversationId) {
+                        return {
+                            ...conversation, 
+                            lastMessage: {
+                                text: message.text, 
+                                sender: message.sender
+                            }
+                        }
+                    }
+                    return conversation
+                })
+                return updatedConversations
+            })
+        })
+
+        return () => socket.off("newMessage")
+    }, [socket])
 
     useEffect(() => {
         const getMessages = async () => {
@@ -39,6 +69,33 @@ const MessageContainer = () => {
         getMessages();
     },[showToast,selectedConversation.userId])
 
+    useEffect(() => {
+		messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+	}, [messages]);
+
+	useEffect(() => {
+		const getMessages = async () => {
+			setLoadingMessages(true);
+			setMessages([]);
+			try {
+				if (selectedConversation.mock) return;
+				const res = await fetch(`/api/messages/${selectedConversation.userId}`);
+				const data = await res.json();
+				if (data.error) {
+					showToast("Error", data.error, "error");
+					return;
+				}
+				setMessages(data);
+			} catch (error) {
+				showToast("Error", error.message, "error");
+			} finally {
+				setLoadingMessages(false);
+			}
+		};
+
+		getMessages();
+	}, [showToast, selectedConversation.userId, selectedConversation.mock]);
+
     return(
         <Flex flex="70"
         bg={useColorModeValue("gray.200", "gray.700")}
@@ -46,7 +103,7 @@ const MessageContainer = () => {
         borderRadius={"md"}
         flexDirection={"column"}>
             <Flex w={"full"} h={12} alignItems={"center"} gap={2}>
-                <Avatar src={selectedConversation.userProfilePic} size={"sm"} />
+                <Avatar src={selectedConversation.userProfilePic} size={"sm"}  name={selectedConversation.username}/>
                 <Text display={"flex"} alignItems={"center"}>
                     {selectedConversation.username} 
                 </Text>
@@ -77,7 +134,10 @@ const MessageContainer = () => {
 
                 {!loadingMessages && (
                     messages.map((message) => (
-                        <Message key={message._id} message={message} ownMessage={currentUser._id === message.sender}/>
+                        <Flex key={message._id} direction={"column"}
+                        ref={messages.length -1 === messages.indexOf(message) ? messageEndRef : null}>
+                            <Message key={message._id} message={message} ownMessage={currentUser._id === message.sender}/>
+                        </Flex>
                     ))
                 )}
                 
