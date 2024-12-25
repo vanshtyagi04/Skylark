@@ -1,15 +1,15 @@
 import {Avatar,Flex,Image, Text,Box,Divider,Button, Spinner} from '@chakra-ui/react';
-import Actions from '../components/Actions';
+import Actions from '../components/Actions.jsx';
 import { useEffect } from 'react';
-import Comment from '../components/Comment';
-import useGetUserProfile from '../hooks/useGetUserProfile';
-import useShowToast from '../hooks/useShowToast';
+import Comment from '../components/Comment.jsx';
+import useGetUserProfile from '../hooks/useGetUserProfile.js';
+import useShowToast from '../hooks/useShowToast.js';
 import { useNavigate, useParams } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
-import userAtom from '../../atoms/userAtom';
+import userAtom from '../atoms/userAtom.js';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import postsAtom from '../../atoms/postsAtom';
+import postsAtom from '../atoms/postsAtom.js';
 
 
 const PostPage = () => {
@@ -68,12 +68,11 @@ const PostPage = () => {
     return <>
         <Flex>
             <Flex w={"full"} alignItems={"center"} gap={3} >
-                <Avatar src={user.profilePic} size={"md"} name='Mark Zuckerberg'/>
+                <Avatar src={user.profilePic} size={"md"} name={user.username}/>
                 <Flex>
                     <Text fontSize={"sm"} fontWeight={"bold"}>
                         {user.username}
                     </Text>
-                    <Image src="/verified.png" w="4" h={4} ml={4} />
                 </Flex>
             </Flex>
             <Flex gap={4} alignItems={"center"}>
@@ -102,19 +101,11 @@ const PostPage = () => {
         
         <Divider my={4}/>
 
-        <Flex justifyContent={"space-between"}>
-            <Flex gap={2} alignItems={"center"}>
-                <Text fontSize={"2xl"}>👋</Text>
-                <Text color={"gray.500"}>Get the app to like, reply and post.</Text>
-            </Flex>
-            <Button>Get</Button>
-        </Flex>
-        <Divider my={4}/>
-        {currentPost.replies.map(reply =>(
+        {currentPost.replies.map((reply) =>(
           <Comment 
             key={reply._id}
             reply={reply}
-            lastReply= {reply._id === currentPost.replies(currentPost.replies.length._id)}
+            lastReply= {reply._id === currentPost.replies[currentPost.replies.length - 1]._id}
           />
         ))}
          

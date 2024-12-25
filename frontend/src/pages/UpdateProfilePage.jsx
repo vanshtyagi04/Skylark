@@ -11,10 +11,10 @@ import {
   Center,
 } from '@chakra-ui/react'
 import { useRecoilState } from 'recoil'
-import userAtom from '../../atoms/userAtom'
+import userAtom from '../atoms/userAtom.js'
 import { useRef, useState } from 'react'
-import usePreviewImg from '../hooks/usePreviewImg'
-import useShowToast from '../hooks/useShowToast'
+import usePreviewImg from '../hooks/usePreviewImg.js'
+import useShowToast from '../hooks/useShowToast.js'
 
 export default function UpdateProfilePage() {
     const [user, setUser] = useRecoilState(userAtom)
