@@ -17,16 +17,16 @@ import {
 import { FiLogOut } from "react-icons/fi";
 import { MdOutlineLightMode, MdDarkMode } from "react-icons/md";
 import { useState } from "react";
-import useShowToast from "../hooks/useShowToast";
+import useShowToast from "../hooks/useShowToast.js";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import userAtom from "../../atoms/userAtom";
+import userAtom from "../atoms/userAtom.js";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { AiFillHome } from "react-icons/ai";
 import { RxAvatar } from "react-icons/rx";
 import {BsFillChatQuoteFill} from "react-icons/bs"
 import useLogout from "../hooks/useLogout.js";
-import authScreenAtom from "../../atoms/authAtom.js";
+import authScreenAtom from "../atoms/authAtom.js";
 
 
 
@@ -72,18 +72,10 @@ const Header = () => {
     }
 
     return (
-        <Flex justifyContent={"flex-start"} mt={6} mb={12}>
+        <Flex justifyContent={"space-between"} mt={6} mb={12}>
             {user && (
-                <Box>
-
-                    <Button cursor={"pointer"} onClick={onOpen} position={"absolute"} left={"10px"}>
-                        <CiSearch size={24} />
-                    </Button>
-                    <Button cursor={"pointer"} ml={"10px"}>
-                            <Link as={RouterLink} to={'/chat'}>
-                                <BsFillChatQuoteFill size={20}/>
-                            </Link>
-                    </Button>
+                <Flex alignItems={"center"} justifyContent={"center"} gap={4}>
+                    <CiSearch size={26} cursor={"pointer"} onClick={onOpen} left={"10px"}/>
                     <Drawer placement="left" onClose={() => {
                         onClose();
                         setSearch({
@@ -116,7 +108,7 @@ const Header = () => {
                                         alignContent={"left"}
                                     >
                                         <Flex alignItems={"left"} justifyContent={"space-between"}>
-                                            <Avatar size="xs" name={user.name} src={user.profilePic} />
+                                            <Avatar size="xs" name={user.username} src={user.profilePic} />
                                             <Text ml= "5px"
                                             mt = "2px">
                                                 {user.username}
@@ -127,44 +119,27 @@ const Header = () => {
                             </DrawerBody>
                         </DrawerContent>
                     </Drawer>
-                </Box>
-            )}
-            <Flex justifyContent={"flex-center"} position={"absolute"} left={"25%"} >
-                {user && (
                     <Link as={RouterLink} to="/">
-                        <AiFillHome size={35}/>
+                        <AiFillHome size={26}/>
                     </Link>
-                )}
-                {!user && (
-                    <Link as={RouterLink} to={"/auth"} onClick={
-                        () => setAuthScreen('login')
-                    }>
-                        Login
-                    </Link>
-                )}
-            </Flex>
-            <Button ml = "20px" aria-label="Toggle color mode" onClick={toggleColorMode} cursor={"pointer"} position={"absolute"} right={"100px"}>
-                {colorMode === "dark" ? <MdDarkMode size={24} /> : <MdOutlineLightMode size={24} />}
-            </Button>
-            <Flex justifyContent={"flex-center"} position={"absolute"} right={"25%"} >
-                {user && (
+                </Flex>
+            )}
+
+            {user && (
                     <Flex alignItems={"center"} gap={4}>
                     <Link as={RouterLink} to={`/${user.username}`}>
-                        <RxAvatar size={35}/>
+                        <RxAvatar size={26}/>
                     </Link>
+                    <Link as={RouterLink} to={'/chat'}>
+                                <BsFillChatQuoteFill size={20}/>
+                    </Link>
+                    {colorMode === "dark" ? <MdDarkMode size={24}  onClick={toggleColorMode} cursor={"pointer"} /> : <MdOutlineLightMode size={24}  onClick={toggleColorMode} cursor={"pointer"} />}
                     <Button size={"xs"} onClick={logout}>
                         <FiLogOut size={20}/>
                     </Button>
                     </Flex>
-                )}
-            </Flex>
-            {!user && (
-                <Link as={RouterLink} to={"/auth"} onClick={
-                    () => setAuthScreen('signup')
-                }>
-                    Signup
-                </Link>
             )}
+
         </Flex>
     );
 };

@@ -2,14 +2,14 @@ import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Box, Flex, Text, Image } from '@chakra-ui/react'
 import { Avatar } from '@chakra-ui/react'
-import Actions from './Actions'
+import Actions from './Actions.jsx'
 import { useState } from 'react'
-import useShowToast from '../hooks/useShowToast'
+import useShowToast from '../hooks/useShowToast.js'
 import { formatDistanceToNow } from "date-fns"
 import { DeleteIcon } from "@chakra-ui/icons";
-import userAtom from '../../atoms/userAtom'
+import userAtom from '../atoms/userAtom.js'
 import { useRecoilState, useRecoilValue } from "recoil";
-import postsAtom from '../../atoms/postsAtom'
+import postsAtom from '../atoms/postsAtom.js'
 
 const Post = ({post, postedBy}) => {
     const [user, setUser] = useState(null)
@@ -17,6 +17,7 @@ const Post = ({post, postedBy}) => {
     const currentUser = useRecoilValue(userAtom);
     const [posts, setPosts] = useRecoilState(postsAtom)
     const navigate = useNavigate()
+    console.log(post)
 
     useEffect(() => {
         const getUser = async () => {
@@ -71,7 +72,7 @@ const Post = ({post, postedBy}) => {
                     {post.replies[0] && (
                         <Avatar 
                         size="xs"
-                        name="John Doe"
+                        name={post.replies[0].username}
                         src={post.replies[0].userProfilePic}
                         position={"absolute"}
                         top={"0px"}
@@ -82,22 +83,22 @@ const Post = ({post, postedBy}) => {
                     {post.replies[1] && (
                         <Avatar 
                         size="xs"
-                        name="John Doe"
+                        name={post.replies[1].username}
                         src={post.replies[1].userProfilePic}
                         position={"absolute"}
-                        top={"0px"}
-                        left="15px"
+                        bottom={"0px"}
+                        right={"-5px"}
                         padding={"2px"}
                         />
                     )}
                     {post.replies[2] && (
                         <Avatar 
                         size="xs"
-                        name="John Doe"
+                        name={post.replies[2].username}
                         src={post.replies[2].userProfilePic}
                         position={"absolute"}
-                        top={"0px"}
-                        left="15px"
+                        bottom={"0px"}
+                        left={"4px"}
                         padding={"2px"}
                         />
                     )}
@@ -114,7 +115,6 @@ const Post = ({post, postedBy}) => {
                         >
                             {user?.username}
                         </Text>
-                        <Image src='/verified.png' w={4} h={4} ml={1}/>
                     </Flex>
                     <Flex gap={4} alignItems={"center"}>
                         <Text fontSize={"sm"} width={36} textAlign={"right"} color={"gray.500"}>
