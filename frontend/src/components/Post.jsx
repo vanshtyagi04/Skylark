@@ -17,7 +17,6 @@ const Post = ({post, postedBy}) => {
     const currentUser = useRecoilValue(userAtom);
     const [posts, setPosts] = useRecoilState(postsAtom)
     const navigate = useNavigate()
-    console.log(post)
 
     useEffect(() => {
         const getUser = async () => {

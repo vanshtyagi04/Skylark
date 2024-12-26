@@ -10,36 +10,34 @@ import postsAtom from "../atoms/postsAtom.js";
 import { CiCamera } from "react-icons/ci";
 
 const UserPage = () => {
-    const {user,loading} = useGetUserProfile();
+    const { user, loading } = useGetUserProfile();
     const { username } = useParams()
     const showToast = useShowToast()
-    const [posts,setPosts] = useRecoilState(postsAtom)
-    const [fetchingPosts,setFetchingPosts] = useState(true);
+    const [posts, setPosts] = useRecoilState(postsAtom)
+    const [fetchingPosts, setFetchingPosts] = useState(true);
 
     useEffect(() => {
-        
 
-        const getPosts = async() =>{
+
+        const getPosts = async () => {
             setFetchingPosts(true);
             try {
                 const res = await fetch(`/api/posts/user/${username}`)
                 const data = await res.json()
-                console.log(data);
                 setPosts(data)
             } catch (error) {
                 showToast("Error", error.message, "error");
                 setPosts([]);
-            }finally{
+            } finally {
                 setFetchingPosts(false);
             }
-            
+
         }
 
         getPosts();
     }, [username, showToast, setPosts])
-    console.log("Post is here and it is recoil state", posts)
 
-    if(!user && loading) {
+    if (!user && loading) {
         return (
             <Flex justifyContent={"center"}>
                 <Spinner size="xl" />
@@ -47,22 +45,25 @@ const UserPage = () => {
         )
     }
 
-    if(!user && !loading) return <h1>User not found</h1>
+    if (!user && !loading) return <Flex flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
+        <CiCamera size={200} />
+        <h1>User not found</h1>
+    </Flex>
 
     return (
         <>
-            <UserHeader user={user}/>
+            <UserHeader user={user} />
             {!fetchingPosts && posts.length === 0 && <Flex flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
-                        <CiCamera size={200}/>
-                        <h1>No post yet...</h1>
-                        </Flex>}
+                <CiCamera size={200} />
+                <h1>No post yet...</h1>
+            </Flex>}
             {fetchingPosts && (
                 <Flex justifyContent={"center"} my={12}>
                     <Spinner size={"x1"} />
                 </Flex>
             )
             }
-            {posts.map((post)=>(
+            {posts.map((post) => (
                 <Post key={post._id} post={post} postedBy={post.postedBy} />
             ))}
         </>

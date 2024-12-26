@@ -31,7 +31,7 @@ export const SocketContextProvider = ({ children }) => {
 
             return () => socketInstance && socketInstance.close();
         } else {
-            setSocket(null); // Reset socket if user logs out
+            setSocket(null); 
         }
     }, [user?._id]);
 

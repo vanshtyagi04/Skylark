@@ -131,7 +131,7 @@ const Header = () => {
                         <RxAvatar size={26}/>
                     </Link>
                     <Link as={RouterLink} to={'/chat'}>
-                                <BsFillChatQuoteFill size={20}/>
+                        <BsFillChatQuoteFill size={20}/>
                     </Link>
                     {colorMode === "dark" ? <MdDarkMode size={24}  onClick={toggleColorMode} cursor={"pointer"} /> : <MdOutlineLightMode size={24}  onClick={toggleColorMode} cursor={"pointer"} />}
                     <Button size={"xs"} onClick={logout}>
