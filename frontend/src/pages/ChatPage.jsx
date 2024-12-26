@@ -110,7 +110,6 @@ const ChatPage = () => {
         }
         catch(error){
             showToast("Error",error.message, "error");
-            console.log(error);
         } finally {
             setSearchingUser(false);
         }

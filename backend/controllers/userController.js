@@ -64,11 +64,6 @@ const loginUser = asyncHandler( async (req , res) => {
     const isPasswordValid = await bcrypt.compare(password, user?.password || "");
     if(!user || !isPasswordValid) return res.status(400).json({ error: "Invalid username or password"});
 
-    if(user.isFrozen) {
-        user.isFrozen = false;
-        await user.save();
-    }
-
     generateTokenAndSetCookie(user._id , res);
 
     res.status(200).json({
@@ -110,7 +105,6 @@ const followUnFollowUser = async (req, res) => {
 		}
 	} catch (err) {
 		res.status(500).json({ error: err.message });
-		console.log("Error in followUnFollowUser: ", err.message);
 	}
 };
 
@@ -162,19 +156,7 @@ const updateUser = asyncHandler(async (req, res) => {
     }
     catch(err) {
         res.status(500).json({ error: err.message});
-        console.log("Error in updateUser: ", err.message);
     }
-})
-
-const freezeAccount = asyncHandler(async (req , res) => {
-    const user = await User.findById(req.user._id);
-		if (!user) {
-			return res.status(400).json({ error: "User not found" });
-		}
-
-		user.isFrozen = true;
-		await user.save();
-        res.status(200).json({ success: true });
 })
 
 const findUsersByName = asyncHandler(async (req, res) => {
@@ -203,6 +185,5 @@ export {
 	followUnFollowUser,
 	updateUser,
 	getUserProfile,
-	freezeAccount,
     findUsersByName,
 };
