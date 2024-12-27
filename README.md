@@ -10,7 +10,6 @@ Feature List:
 ❤️ Like/Unlike Post
 💬 Comment to a Post
 👥 Follow/Unfollow Users
-❄️ Freeze Your Account
 🌓 Dark/Light Mode
 📱 Completely Responsive
 💬 Chat App With Image Support
