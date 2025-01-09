@@ -1,6 +1,6 @@
 SKYLARK
 
-Skylark is a cutting-edge social app built with MERN, Socket.io, and Chakra UI. It offers features like post creation, likes, comments, follow/unfollow, account freezing, and real-time chat with image support. Fully responsive with dark/light mode, message statuses, and notification sounds, Skylark redefines seamless, stylish, and interactive social experiences. 
+Skylark is a cutting-edge social app built with MERN, Socket.io, and Chakra UI. It offers features like post creation, likes, comments, follow/unfollow and real-time chat with image support. Fully responsive with dark/light mode, message statuses, and notification sounds, Skylark redefines seamless, stylish, and interactive social experiences. 
 
 Feature List:
 🌟 Tech stack: MERN + Socket.io + Chakra UI
